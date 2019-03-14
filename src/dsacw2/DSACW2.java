@@ -91,27 +91,29 @@ public class DSACW2 {
     }
     
     
-    public static void test(){
-        Random rnd = new Random();        
-        int[] a = new int[10000];        
-        for (int i = 0; i<a.length; i++){
-            if(i%2==0){
-                a[i]=4;
-            }else{
-                a[i] = rnd.nextInt(10);
+    public static void test(int minSize, int maxSize, int increment, int repeats){
+        Random rnd = new Random(); 
+        for (int k = minSize; k<=maxSize; k+=increment){
+            int[] a = new int[k];        
+            for (int i = 0; i<a.length; i++){
+                if(i%2==0){
+                    a[i]=4;
+                }else{
+                    a[i] = rnd.nextInt(10);
+                }
             }
-        }
-        
-        long total =0;
-        for(int j =0; j<10000; j++){
-            final long startTime = System.currentTimeMillis();
-            show_result(ex1t3(a));
-            final long endTime = System.currentTimeMillis();
-            total += endTime - startTime;
+
+            long total =0;
+            for(int j =0; j<repeats; j++){
+                long startTime = System.nanoTime();
+                ex1t3(a);
+                long endTime = System.nanoTime();
+                total += (endTime - startTime);
+            }
+            System.out.printf("Array: %s, Time: %d\n", k, total/repeats);
 
         }
-        System.out.println(total);
-        //System.out.println("Time: " + total/10000);
+        //System.out.println(total);
     }
     
     public static void main(String[] args) {
@@ -119,7 +121,7 @@ public class DSACW2 {
         //show_result(ex1t1(a));
         //show_result(ex1t2(a));
         //show_result(ex1t3(a));
-        test();
+        test(10000, 100000, 10000, 100);
     }
     
 }
